@@ -1,0 +1,61 @@
+94
+
+- OS:
+	- it consist of kernel and other softwares.
+
+- kernel:
+	- manage ressources 
+	- manage RAM, CPU, access to device
+	
+- file descriptor:
+	- it refers to an open file.
+	- it is an integer number 
+	- process inheriates three file descriptor std input. std outout, std error which are normally connected to shell
+
+- process:
+	- creation:
+		- u create new process using fork system call which will create exactly the same process like the parent by calling dup system call.
+		- the new process can call exec() to load a new process instead of the duplicated process
+	
+	- termination:
+		- the process can be terminated by two ways:
+			- the process itself can call exit() system call and can pass a value which can read from the parent process by calling wait()
+			
+			- being killed by signal from another process
+
+- deaemon:
+	- it is a normal process which runs in the background
+	- because it runs in the background it has no controlling terminal
+	
+
+- IPC:
+	
+	- signals:
+		- it is called software interrupt 
+		- kill command can be used to send a signal to another process
+		- u can define a signal handler to deal with a signal 
+		
+		
+
+
+- system call:
+	- entry point to the kernel
+	- it changes the cpu from userland to the kernel land 
+	- if there is an error the errno variable would be updated by the library 
+	
+	
+glibc:
+	- it is the standard lbrary in linux it is GNU lib c
+	- if u want to know which lib c u have u can call /lib/libc.so.6 
+	
+- I/O operations:
+	- open system call:
+		- it open a file or create a new file
+		- int open(const char *pathname, int flags, ... /* mode_t mode */);
+			-  if open is used to create a new file then the mode would decide the permission on this file,
+			if open doesnot create a new file then the permission might be neglected. access mode are ex:
+			S_IWUSR, S_IRUSR
+			
+		- 
+			
+		
