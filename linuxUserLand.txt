@@ -44,7 +44,7 @@
 	- if there is an error the errno variable would be updated by the library 
 	
 	
-glibc:
+- glibc:
 	- it is the standard lbrary in linux it is GNU lib c
 	- if u want to know which lib c u have u can call /lib/libc.so.6 
 	
@@ -56,6 +56,59 @@ glibc:
 			if open doesnot create a new file then the permission might be neglected. access mode are ex:
 			S_IWUSR, S_IRUSR
 			
-		- 
+		- if u valled open twice u would get a new file descriptor which does not share the offset with the first file
+		
+		- using dup() system call u get new file descriptor which point to the old file descriptor
+		- dup(1,2) -> now one would refer to two 2<&1
+		- to create a temp file u can use FILE *tmfile(void) and u can read and write to that file and it would delelted once u call close on the file
+			- ex:
+			- FILE *fp;
+			- fp = tmpfile();
+		
+- Process:
+	- each process has process ID
+	- to send a signal to a process u can use kill()
+	- to get the PID of a process u can use getpid()
+	- the process uses virtuel memory 
+	- kernel has page table for each process, page table maps the virtual memory to physical memory
+	- 
+	
+- time:
+	- real time : consist of two times
+		- calender time: since fixed time point which is 1970 EPOC time
+		- wall time: since the start of the process
+	- cpu time: 
+		- the time each process occupy from the cpu
+		
+	broken down time: it is the number of seconds but converted to year, month and hour, etc
+		struct tm { int tm_sec; /* Seconds (0-60) */ int tm_min; , etc};
+			
+	
+	
+	
+	- Time API:	
+		- int gettimeofday(struct timeval *tv, struct timezone *tz)
+			- return the second siche 1970 "tv->time_t" would have the seconds value
+			
+		- time_t time(time_t *timep);
+			- return the time which is the number of seconds since 1970, u give null to the function
+			
+		- char *ctime(const time_t *timep)
+			- would return fixed-format string ex: "Wed Jun 8 14:22:34 2011"
+	
+		- struct tm *gmtime(const time_t *timep)
+		- struct tm *localtime(const time_t *timep)
+			- would cinvert calender time to broken down format
+			- local time would consider the time zone
+			
+		- time_t mktime(struct tm *timeptr)
+			- would change tm toke number of seconds
+	
+	- in the directory usr/share/zoneinfo would be files for information about different time zones, the information about the local time would be in /etc/localtime which is linked to a file in "/usr/share/zoneinfo"
+			
+			
+			
+			
+			
 			
 		
