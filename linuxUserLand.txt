@@ -84,8 +84,6 @@
 		struct tm { int tm_sec; /* Seconds (0-60) */ int tm_min; , etc};
 			
 	
-	
-	
 	- Time API:	
 		- int gettimeofday(struct timeval *tv, struct timezone *tz)
 			- return the second siche 1970 "tv->time_t" would have the seconds value
@@ -106,9 +104,32 @@
 	
 	- in the directory usr/share/zoneinfo would be files for information about different time zones, the information about the local time would be in /etc/localtime which is linked to a file in "/usr/share/zoneinfo"
 			
-			
-			
-			
+- Signals:
+	- it is described as software interrupt
+	- we use sysmbolic name of the signal as the number of the signal changes from platform to another platform
+	- signals are divided to standard signals and real time signals.
+	- to send a signal use kill command: int kill(pid_t pid, int sig);
+		- pid > 0: it is sent to a normal process
+		-  pid < 0 : each process which has PID less than this number
+		- by sending sig = 0, u can check if the process can be signaled
+	- standard signals have the value from 1 to 31 
+		- SIGKILL : that is the sure kill signal u cannot create a handle to it, kill -9 , or kill -KILL
+		- SIGTERM : that is the standard signal to terminate a process, it is send by kill or killall,
+
+- Threads:
+	- it has some data types:
+		- pthread_t : Thread identifer
+		- pthread_mutex_t: Mutex
+		- pthread_cond_t: Condition variable
+		- pthread_once_t: one time initialization
+	
+	- each thread has errno 
+	- all programs which use Pthreads API must be compiled with cc -pthread option the program is linked with -lpthread
+	
+	
+	
+	
+		
 			
 			
 		
