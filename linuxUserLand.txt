@@ -126,7 +126,31 @@
 	- each thread has errno 
 	- all programs which use Pthreads API must be compiled with cc -pthread option the program is linked with -lpthread
 	
+- Thread creation:
+	- int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start)(void *), void *arg);
+		- pthread_t is a buffer which can be used to store identifer of the thread which it is used later to identify the thread
+		- 
+- Thread Termination:
+	- thread would be terminated using one of the options:
+		- pthread_exit, pthread_cancel, exit
 	
+	- pthread_exit(void*):
+		- it would terminate the thread and specifiy a return value which can be otained by another thread using pthread_join()
+		- it is can be called by any function not only the main function as the case by return
+		- the argument passed to the function should not be in the stack as the stack won't be avaliable 
+		- if the main thread called pthread_exit(): other thread would remain exists
+		
+- join a thread:
+	- int pthread_join(pthread_t thread, void **retval);
+	- it is used when the thread is not detached
+	- threads are paired in thread in a process can join with any other threads, it should not be parent child relationship
+	- u should say which thread u want to join with u cannot say join with anythread as in the case of wait system call
+	- retval: u give the address of void pointer
+	
+- detach:
+	- int pthread_detach(pthread_t thread);
+	- if u do want to make the thread joinable u can detach the thread
+	- a thread can detach itself calling : pthread_detach(pthread_self());
 	
 	
 		
