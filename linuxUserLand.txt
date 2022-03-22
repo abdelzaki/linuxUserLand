@@ -106,7 +106,14 @@
 	
 	- in the directory usr/share/zoneinfo would be files for information about different time zones, the information about the local time would be in /etc/localtime which is linked to a file in "/usr/share/zoneinfo"
 			
-			
+- file system:
+	- logical block consists of contigous pgysical blocks in disk driver
+	- partition consists of super block which describe the file system in this partition and then i-node table which descrbe the data blocks and then the data blocks
+	
+	- if u want to know the mounted file uses mount command which would show the whole mounts file systems
+
+	- to create soft link call: symlink(source, link) : the link should not exist before the call of symlink
+	
 			
 			
 			
