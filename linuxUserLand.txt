@@ -243,8 +243,24 @@
 			- 0 : get the first message of the queue
 			- negative: prioirty queue get a message of a value less than the value given to the queue
 			
-			
-			
+- semaphore:
+	- it is used as synchronize mechanism
+	- steps are:
+		- create semaphore using semget()
+		- initalize the semaphore using semctl with setval
+		- perform on semaphore using semop
+		- delete using semctl with IPC_RMID
+
+	- semget()
+		- create semaphore we provide key and the number of semaphore to be created and it must be greater than 0 in order to create one
+
+	- semctl():
+		- it is used in initalize, or delete semaphore
+		- semctl(semid,0,SETVAL,1) : initiaize semaphore to 1
+
+	- semop(semid, struct sembuf*, sizeofsembufArray)
+		- sembuf->sem_op = 1 or -1 where 1 is equal to release and -1 lock
+				
 			
 			
 			
