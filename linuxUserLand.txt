@@ -172,5 +172,82 @@
 			to inialize mutex dynamically allocated
 			int pthread_mutex_init(pthread_mutex_t *mutex, const pthread_mutexattr_t *attr);
 			int pthread_mutex_destroy(pthread_mutex_t *mutex);
+	
+	- condition variables:
+		- it is of type pthread_cond_t 
+		- to initialize the variable:
+			- pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
+		- API:
+			#include <pthread.h>
+			int pthread_cond_signal(pthread_cond_t *cond);
+			int pthread_cond_broadcast(pthread_cond_t *cond);
+			int pthread_cond_wait(pthread_cond_t *cond, pthread_mutex_t *mutex);
+			
+- shared library:
+	- if u want to compile a file u call cc, u can give -g flag to include the debugging information
+	- to create static library:
+		- ar options archive object-file...
+		- options:
+			- r: replace object in the archive
+	- we need to embedded the dynmaic library name in the ELF file so the file knows that it can use the library. by compiling the file and giving the name of the library with .so the file embedded the name of the library in the ELF file
+	- when the file is executed the linker at the run time would search the file system on the target machine to find the shared libray object, it search in /lib and in /usr/lib
+	
+	- shared library naming:
+		- realname: libname.so.major.minor
+		- soname: libname.major
+		- linkername: libname.so and it is what we build against
+		
+- IPC in general:
+	- different process can communicate with each other using different methods like sending the data or share the memory
+	sending data require intefering of the kernel as one process send the data to the kernel while others read the data from the kernel. using shared memory requires less interfering from the kernel as the kernel would map the same memory address in the process page table.
+	
+	- sending data has two flavor using byte stream meaning a process can read data in byte there is no concept of message u a process can read 1,2,3 bytes each time, while in message sending data the process can read only the same size every time u cannot read half a message
+	
+- system V IPC:
+	- system V was introduced in UNIX before linux 
+	- it provided three IPC mechanisms, shared memory, message qeue, semaphore
+	- each mechanism of them has a get message ex: msgget(), shmget(), semaget() which is equivlant to an open system call but there is a different while open returns file descriptor, get return object which is unique to the whole system not only in the process.
+	- get has 2 tasks:
+		- create an object with a key and return the object 
+			- msgget(key, IPC_CREAT | S_IRUSR | S_IWUSR);
+		- return an object with a specific key:
+			msgget(key, S_IRUSR | S_IWUSR);
+	- ctl:
+		- it gives the ability to perform on the identifer 
+		- u can delete the object using ctl
+			- msgctl(id,IPC_RMID)
+			
+	- key and identifer:
+		- key is an integer of type key_t
+		- it should be q unique number 
+		- the idea is that from the key u get an object identifer by calling get()
+		- if the object does not exist u get a new object 
+		- if the object exist u get the same object 
+		- the object is system unique means if another process knows the object u can use it to send data to the process 
+		
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			
 		
