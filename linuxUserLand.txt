@@ -233,6 +233,15 @@
 		- if the object exist u get the same object 
 		- the object is system unique means if another process knows the object u can use it to send data to the process 
 		
+- message queue:
+	- u create a message queue using msgget() 
+	- using msgsnd and msgrcv u can send data using the queue
+	- message should have structure like:
+		- typedef struct {long mtype; scnUpdateRequest_t data; } queueScnUpdateRequest_t;
+		- mytype should be integer
+			- postive number : get the message of this type
+			- 0 : get the first message of the queue
+			- negative: prioirty queue get a message of a value less than the value given to the queue
 			
 			
 			
