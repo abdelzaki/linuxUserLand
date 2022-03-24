@@ -352,8 +352,11 @@
 				- it is only possible on DATA_GRAM socket as it is connectionless, which makes sense as it makes no sense to make broadcast on point-to-point connection  
 				- 	this option should at the begining decided, it is made so to pervent unwanted behaviour 
 
-			- 
+			- SO_REUSEADDR:
+				- to allow reconnecting to the socket 
 
+	- Broadcasting:
+		- 
 
 			
 			
