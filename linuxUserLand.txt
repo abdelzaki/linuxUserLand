@@ -260,13 +260,41 @@
 
 	- semop(semid, struct sembuf*, sizeofsembufArray)
 		- sembuf->sem_op = 1 or -1 where 1 is equal to release and -1 lock
-				
+		
+- shared memory:
+	- create mempory using shmget()
+	- attach memory to user space using shmattch()
+	- read and write to the shared memory
+	- remove shared memory using shmdt
+	- delete the shared memory using shmctl
+	
+	
+- sockets:
+	- it is a way of IPC communication, which allowing communication between application on the same host or different hosts connected to network
+	
+	- socket(domain, type, protocol = 0)
+		- domain: u decided if u want to communicate between application on the same host "AF_UNIX" or using network "AF_INET"
+		- type u decide wether the communication message oriented, connectionless and no reliable "SOCK_DGRAM" which is implemented as UDP  or byte, connection oriented "SOCK_STREAM" which is implemented in TCP
+		
+	- bind(fd, sock_addr, lenght):
+		- bind system call bind socket to a well known address. 
+		- address could be internet address or local address
+		
+	- listen(fd, size):
+		- to decide the capacity of the socket 
+	
+	- int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
+	- int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen);		
 			
-			
-			
-			
-			
-			
+	- domain:
+		- UNIX domain:
+			- struct sockaddr_un{sa_family_t sun_family; /* Always AF_UNIX */ char sun_path[108]; /* Null-terminated socket pathname */};
+			- strncpy(addr.sun_path, SOCKNAME, sizeof(addr.sun_path) - 1);
+			- u bind to a path which none existing path that is why u always call remove before u bind to the socket path
+				- if (remove(SV_SOCK_PATH) == -1 && errno != ENOENT)
+				- errExit("remove-%s", SV_SOCK_PATH);
+						
+		- internet domain:
 			
 			
 			
