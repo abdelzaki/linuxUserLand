@@ -268,24 +268,70 @@
 	- remove shared memory using shmdt
 	- delete the shared memory using shmctl
 	
-	
 - sockets:
 	- it is a way of IPC communication, which allowing communication between application on the same host or different hosts connected to network
 	
+	- the same device can have multiple IP address using alias 
+		ex: ifconfig eth1:0 192.168.0.1 
+
+
 	- socket(domain, type, protocol = 0)
 		- domain: u decided if u want to communicate between application on the same host "AF_UNIX" or using network "AF_INET"
 		- type u decide wether the communication message oriented, connectionless and no reliable "SOCK_DGRAM" which is implemented as UDP  or byte, connection oriented "SOCK_STREAM" which is implemented in TCP
 		
-	- bind(fd, sock_addr, lenght):
+	- bind(fd, sock_addr*, lenght):
 		- bind system call bind socket to a well known address. 
 		- address could be internet address or local address
+		- the address might have also a port number		
+		- if u do not decide the port number the kernel would decide a port number for the process
+		- the address u bind to, should belong to interface which is avaliable for the host
+		- u can decide wildcard IP address INADDR_ANY
 		
 	- listen(fd, size):
 		- to decide the capacity of the socket 
 	
 	- int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
 	- int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen);		
-			
+	
+	- byte ordering:
+		- network use always big endian 
+		- any data sent via network should in big endian and to make sure that, it is the case is we we use the following APIs
+			- uint16_t htons(uint16_t host16bitvalue) 
+			- uint32_t htonl(uint32_t host32bitvalue)
+				- host to network
+	
+			- uint16_t ntohs(uint16_t net16bitvalue) ;
+			- uint32_t ntohl(uint32_t net32bitvalue) ;
+				-  network to host
+	
+	- Address manipulation
+		- int inet_aton(const char *strptr, struct in_addr *addrptr);
+			- asci ="192.0.0.0" to network byte order
+
+		- in_addr_t inet_addr(const char *strptr);
+			- return binary from asci
+			- it return binary or it return INADDR_NONE on an error
+			- if the address 255.255.255.255 it would also return INADDR_NONE
+
+		char *inet_ntoa(struct in_addr inaddr);
+			- return asci from binary
+
+	- Address:
+		- for internet we use structure sockaddr_in which should be casted to "struct sockaddr"
+		- struct sockaddr_in { 
+			sa_family_t sin_family; /* AF_INET */
+			in_port_t sin_port; /* 16-bit TCP or UDP port number network byte ordered */	
+			struct in_addr sin_addr; /* 32-bit IPv4 address network byte ordered */}			
+		
+		- struct sockaddr: 
+			- it is the generic type which we pass to bind, accept, connect.
+			- it is always passed as a pointer
+			- from our point of view the only use of this pointer is to cast pointer to it and pass it to the functions which expect it
+		- struct sockaddr { 
+				uint8_t sa_len;
+				sa_family_t sa_family; /* address family: AF_xxx value */
+				char sa_data[14]; /* protocol-specific address */};
+				
 	- domain:
 		- UNIX domain:
 			- struct sockaddr_un{sa_family_t sun_family; /* Always AF_UNIX */ char sun_path[108]; /* Null-terminated socket pathname */};
@@ -297,9 +343,18 @@
 		- internet domain:
 			
 			
-			
-			
-			
+	- Socket option:
+		- we use setsocketopt(): to set a certain option of the socket
+
+		options:
+			- SO_BROADCAST:
+				- to enable the broadcast abitiy of a socket 
+				- it is only possible on DATA_GRAM socket as it is connectionless, which makes sense as it makes no sense to make broadcast on point-to-point connection  
+				- 	this option should at the begining decided, it is made so to pervent unwanted behaviour 
+
+			- 
+
+
 			
 			
 			
