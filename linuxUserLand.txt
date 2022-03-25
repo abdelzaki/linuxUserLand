@@ -356,8 +356,17 @@
 				- to allow reconnecting to the socket 
 
 	- Broadcasting:
-		- 
+		- it is the idea to send data to every device on the network
+		- it is only possible in DATA_GRAM communication
+		- it is achieved by sending to the address of the network with the reset of the address is netmask+F..F
+		- every internet interface device would get the message and read it and if there is no socket bind to this port which the message is sent to the message would be discarded
+		- it has a big disadvantage every host on the subnet must process the datagram till the UDP layer and then the datagram is discarded which is a big disadvantage comparing to multicast 
 
+	- multicast:
+		- IP address range for multicast is: 224.0.0.0 to 239.255.255.255
+		- the host which want to get the data should join a group and then the data would be sent to him
+		- sending multicast requires nothing special, just decide the IP address and sent to it
+		- 
 			
 			
 			
