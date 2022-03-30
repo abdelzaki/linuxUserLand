@@ -366,7 +366,8 @@
 		- IP address range for multicast is: 224.0.0.0 to 239.255.255.255
 		- the host which want to get the data should join a group and then the data would be sent to him
 		- sending multicast requires nothing special, just decide the IP address and sent to it
-		- 
+		- socket options to enable receiving Multicast messages:
+			- IP_ADD_MEMBERSHIP
 			
 			
 			
